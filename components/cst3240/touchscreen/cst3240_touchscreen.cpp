@@ -98,7 +98,7 @@ i2c::ErrorCode CST3240Touchscreen::read_register16_(uint16_t reg, uint8_t *data,
 
 i2c::ErrorCode CST3240Touchscreen::write_register16_(uint16_t reg, const uint8_t *data, size_t len) {
   uint8_t buf[32];
-  if (len + 2 > sizeof(buf)) return i2c::ERROR_OTHER;
+  if (len + 2 > sizeof(buf)) return i2c::ERROR_TOO_LARGE;
   buf[0] = reg >> 8;
   buf[1] = reg & 0xFF;
   if (data && len > 0) memcpy(&buf[2], data, len);
