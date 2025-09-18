@@ -20,7 +20,7 @@ static const size_t MAX_TOUCHES = 5;
   }
 
 void CST3240Touchscreen::setup() {
-  ESP_LOGI("cst3240", ">>> setup() called, addr=0x%02X", this->address_);
+  ESP_LOGD("cst3240", ">>> setup() called, addr=0x%02X", this->address_);
   if (this->reset_pin_ != nullptr) {
     this->reset_pin_->setup();
     this->reset_pin_->digital_write(false);
@@ -47,7 +47,7 @@ void CST3240Touchscreen::setup_internal_() {
   }
 
   this->setup_done_ = true;
-  ESP_LOGI(TAG, "CST3240 initialized at 0x%02X", this->address_);
+  ESP_LOGD(TAG, "CST3240 initialized at 0x%02X", this->address_);
 }
 
 void CST3240Touchscreen::update_touches() {
