@@ -20,7 +20,6 @@ static const size_t MAX_TOUCHES = 5;
   }
 
 void CST3240Touchscreen::setup() {
-  ESP_LOGD("cst3240", ">>> setup() called, addr=0x%02X", this->address_);
   if (this->reset_pin_ != nullptr) {
     this->reset_pin_->setup();
     this->reset_pin_->digital_write(false);
@@ -31,8 +30,6 @@ void CST3240Touchscreen::setup() {
   }
   this->setup_internal_();
 }
-
-static int var = 0;
 
 void CST3240Touchscreen::setup_internal_() {
   // optional INT pin
@@ -49,24 +46,10 @@ void CST3240Touchscreen::setup_internal_() {
   }
 
   this->setup_done_ = true;
-  ESP_LOGD(TAG, "CST3240 initialized at 0x%02X", this->address_);
-  var = 1;
+  ESP_LOGI(TAG, "CST3240 initialized at 0x%02X", this->address_);
 }
 
 void CST3240Touchscreen::update_touches() {
-    static int count = 0;
-  if (count++ == 100)
-  {
-    if(var)
-    {
-        ESP_LOGD(TAG, "cst3240 Initialized");
-    }
-    else
-    {
-        ESP_LOGD(TAG, "cst3240 Not Initialized");
-    }
-    count = 0;
-  }
   this->skip_update_ = true;
   if (!this->setup_done_)
     return;
@@ -90,8 +73,8 @@ void CST3240Touchscreen::update_touches() {
     uint16_t y = (buf[2] << 4) | (buf[3] & 0x0F);
     this->add_raw_touch_position_(i, x, y);
     ESP_LOGD(TAG, "Touch %d -> X=%u Y=%u", i, x, y);
-  }  
- 
+  }
+
   // acknowledge event
   uint8_t over = 0xAB;
   this->write_register16_(REG_TOUCH_DATA, &over, 1);
