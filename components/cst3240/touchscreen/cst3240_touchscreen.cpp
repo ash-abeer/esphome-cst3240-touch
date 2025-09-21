@@ -72,7 +72,8 @@ void CST3240Touchscreen::update_touches() {
     uint16_t y = (buf[2] << 4) | (buf[3] & 0x0F);
     this->add_raw_touch_position_(i, x, y);
     ESP_LOGD(TAG, "Touch %d -> X=%u Y=%u", i, x, y);
-  }
+  } 
+  this->publish_state();
 
   // acknowledge event
   uint8_t over = 0xAB;
