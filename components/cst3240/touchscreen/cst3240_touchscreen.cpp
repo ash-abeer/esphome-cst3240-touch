@@ -60,7 +60,7 @@ void CST3240Touchscreen::update_touches() {
 
   uint8_t event = (buf[0] & 0x04) ? 1 : 0;
   uint8_t num_touches = buf[0] & 0x0F;
-
+  ESP_LOGD(TAG, "event %d, num_touches %d", event, num_touches);
   if (event == 0 || num_touches == 0 || num_touches > MAX_TOUCHES)
     return;
 
