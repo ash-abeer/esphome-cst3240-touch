@@ -11,7 +11,7 @@ static const char *const TAG = "cst3240.touchscreen";
 static const uint8_t PRIMARY_ADDRESS = 0x5A;  // default I²C address for CST3240
 static const uint16_t REG_TOUCH_DATA = 0xD000;
 static const uint16_t REG_CHIP_ID   = 0xD109;
-static const size_t MAX_TOUCHES = 5;
+static const size_t MAX_TOUCHES = 10;
 
 #define ERROR_CHECK(err) \
   if ((err) != i2c::ERROR_OK) { \
@@ -60,7 +60,6 @@ void CST3240Touchscreen::update_touches() {
 
   uint8_t event = (buf[0] & 0x04) ? 1 : 0;
   uint8_t num_touches = buf[0] & 0x0F;
-  ESP_LOGD(TAG, "event %d, num_touches %d", event, num_touches);
   if (event == 0 || num_touches == 0 || num_touches > MAX_TOUCHES)
     return;
 
