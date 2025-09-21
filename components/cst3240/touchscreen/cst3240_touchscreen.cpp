@@ -65,7 +65,7 @@ void CST3240Touchscreen::update_touches() {
 
   this->skip_update_ = false;
 
-  for (uint8_t i = 0; i < num_touches; i++) {
+  for (uint8_t i = 0; i < 1; i++) {
     // CST3240 encodes only one touch in 7 bytes, so multiple touches would need extra regs
     // For now, handle just the first touch
     uint16_t x = (buf[1] << 4) | ((buf[3] >> 4) & 0x0F);
