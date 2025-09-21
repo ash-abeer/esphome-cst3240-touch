@@ -50,7 +50,7 @@ void CST3240Touchscreen::setup_internal_() {
 }
 
 void CST3240Touchscreen::update_touches() {
-  this->skip_update_ = true;
+  // this->skip_update_ = true;
   if (!this->setup_done_)
     return;
 
@@ -63,7 +63,7 @@ void CST3240Touchscreen::update_touches() {
   if (event == 0 || num_touches == 0 || num_touches > MAX_TOUCHES)
     return;
 
-  this->skip_update_ = false;
+  // this->skip_update_ = false;
 
   for (uint8_t i = 0; i < 1; i++) {
     // CST3240 encodes only one touch in 7 bytes, so multiple touches would need extra regs
@@ -73,7 +73,6 @@ void CST3240Touchscreen::update_touches() {
     this->add_raw_touch_position_(i, x, y);
     ESP_LOGD(TAG, "Touch %d -> X=%u Y=%u", i, x, y);
   } 
-  this->publish_state();
 
   // acknowledge event
   uint8_t over = 0xAB;
